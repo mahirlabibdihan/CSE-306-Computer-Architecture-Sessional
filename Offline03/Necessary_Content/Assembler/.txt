@@ -1,0 +1,6 @@
+branch offset can be -8 to +7
+
+Maximum line difference in backward = 7
+Maximum line difference in forward = 8
+
+Jump address can 0 to 255

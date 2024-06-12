@@ -1,0 +1,244 @@
+
+CSE_306_DATA_MEMORY.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000128  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  0000019c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000010  00800060  00800060  0000019c  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  0000019c  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001cc  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000028  00000000  00000000  00000208  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   000006ef  00000000  00000000  00000230  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 000005d6  00000000  00000000  0000091f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   000002df  00000000  00000000  00000ef5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000034  00000000  00000000  000011d4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    00000439  00000000  00000000  00001208  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    00000139  00000000  00000000  00001641  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000018  00000000  00000000  0000177a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   8:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+   c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a0 37       	cpi	r26, 0x70	; 112
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 4a 00 	call	0x94	; 0x94 <main>
+  74:	0c 94 92 00 	jmp	0x124	; 0x124 <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <_Z12memory_resetv>:
+
+uint8_t MEMORY[1 << 4];
+
+void memory_reset()
+{
+	for (int i = 0; i < 16; i++)
+  7c:	80 e0       	ldi	r24, 0x00	; 0
+  7e:	90 e0       	ldi	r25, 0x00	; 0
+  80:	80 31       	cpi	r24, 0x10	; 16
+  82:	91 05       	cpc	r25, r1
+  84:	34 f4       	brge	.+12     	; 0x92 <_Z12memory_resetv+0x16>
+		MEMORY[i] = 0;
+  86:	fc 01       	movw	r30, r24
+  88:	e0 5a       	subi	r30, 0xA0	; 160
+  8a:	ff 4f       	sbci	r31, 0xFF	; 255
+  8c:	10 82       	st	Z, r1
+
+uint8_t MEMORY[1 << 4];
+
+void memory_reset()
+{
+	for (int i = 0; i < 16; i++)
+  8e:	01 96       	adiw	r24, 0x01	; 1
+  90:	f7 cf       	rjmp	.-18     	; 0x80 <_Z12memory_resetv+0x4>
+  92:	08 95       	ret
+
+00000094 <main>:
+int main(void)
+{
+	// Some pins of PORTC can not be used for I/O directly.
+	// turn of JTAG to use them
+	// o write a 1 to the JTD bit twice consecutively to turn it off
+	MCUCSR = (1 << JTD);
+  94:	80 e8       	ldi	r24, 0x80	; 128
+  96:	84 bf       	out	0x34, r24	; 52
+	MCUCSR = (1 << JTD);
+  98:	84 bf       	out	0x34, r24	; 52
+
+	DDRC = 0xF0; // A[0] - Memory Write | A[1] - Memory Read | A[2] - Clock | A[3] - Reset
+  9a:	80 ef       	ldi	r24, 0xF0	; 240
+  9c:	84 bb       	out	0x14, r24	; 20
+	DDRB = 0x00; // Address B[3:0] | Write Data B[7:4]
+  9e:	17 ba       	out	0x17, r1	; 23
+
+	DDRA = 0xFF; // C[3:0] - Data Read
+  a0:	8f ef       	ldi	r24, 0xFF	; 255
+  a2:	8a bb       	out	0x1a, r24	; 26
+	DDRD = 0xFF;
+  a4:	81 bb       	out	0x11, r24	; 17
+	
+	memory_reset();
+  a6:	0e 94 3e 00 	call	0x7c	; 0x7c <_Z12memory_resetv>
+
+	uint8_t last_control_input = 0b0000, current_control_input;
+	uint8_t last_write_data_address = 0b0000, current_write_data_address;
+  aa:	90 e0       	ldi	r25, 0x00	; 0
+	DDRA = 0xFF; // C[3:0] - Data Read
+	DDRD = 0xFF;
+	
+	memory_reset();
+
+	uint8_t last_control_input = 0b0000, current_control_input;
+  ac:	80 e0       	ldi	r24, 0x00	; 0
+  ae:	02 c0       	rjmp	.+4      	; 0xb4 <main+0x20>
+  b0:	8d 2f       	mov	r24, r29
+  b2:	91 2f       	mov	r25, r17
+	uint8_t last_write_data_address = 0b0000, current_write_data_address;
+
+	while (1)
+	{
+		current_control_input = PINC & 0xF;
+  b4:	c3 b3       	in	r28, 0x13	; 19
+  b6:	dc 2f       	mov	r29, r28
+  b8:	df 70       	andi	r29, 0x0F	; 15
+		current_write_data_address = PINB;
+  ba:	16 b3       	in	r17, 0x16	; 22
+		if (current_control_input & RESET_)
+  bc:	c3 ff       	sbrs	r28, 3
+  be:	09 c0       	rjmp	.+18     	; 0xd2 <main+0x3e>
+		{
+			memory_reset();
+  c0:	0e 94 3e 00 	call	0x7c	; 0x7c <_Z12memory_resetv>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  c4:	87 ea       	ldi	r24, 0xA7	; 167
+  c6:	91 e6       	ldi	r25, 0x61	; 97
+  c8:	01 97       	sbiw	r24, 0x01	; 1
+  ca:	f1 f7       	brne	.-4      	; 0xc8 <main+0x34>
+  cc:	00 c0       	rjmp	.+0      	; 0xce <main+0x3a>
+  ce:	00 00       	nop
+  d0:	1f c0       	rjmp	.+62     	; 0x110 <main+0x7c>
+			_delay_ms(100);
+		}
+		else if ((last_control_input ^ current_control_input) & CLK_)
+  d2:	28 2f       	mov	r18, r24
+  d4:	2d 27       	eor	r18, r29
+  d6:	22 ff       	sbrs	r18, 2
+  d8:	1b c0       	rjmp	.+54     	; 0x110 <main+0x7c>
+		{ // EDGE
+			if (last_control_input & CLK_)
+  da:	82 ff       	sbrs	r24, 2
+  dc:	13 c0       	rjmp	.+38     	; 0x104 <main+0x70>
+			{ // NEG-EDGE - for writing
+				if (last_control_input & MEM_WRITE_)
+  de:	80 ff       	sbrs	r24, 0
+  e0:	11 c0       	rjmp	.+34     	; 0x104 <main+0x70>
+				{
+					MEMORY[last_write_data_address & 0xF] = (last_write_data_address >> 4);
+  e2:	e9 2f       	mov	r30, r25
+  e4:	ef 70       	andi	r30, 0x0F	; 15
+  e6:	f0 e0       	ldi	r31, 0x00	; 0
+  e8:	89 2f       	mov	r24, r25
+  ea:	90 e0       	ldi	r25, 0x00	; 0
+  ec:	95 95       	asr	r25
+  ee:	87 95       	ror	r24
+  f0:	95 95       	asr	r25
+  f2:	87 95       	ror	r24
+  f4:	95 95       	asr	r25
+  f6:	87 95       	ror	r24
+  f8:	95 95       	asr	r25
+  fa:	87 95       	ror	r24
+  fc:	e0 5a       	subi	r30, 0xA0	; 160
+  fe:	ff 4f       	sbci	r31, 0xFF	; 255
+ 100:	80 83       	st	Z, r24
+					PORTD = (last_write_data_address >> 4);
+ 102:	82 bb       	out	0x12, r24	; 18
+ 104:	87 ea       	ldi	r24, 0xA7	; 167
+ 106:	91 e6       	ldi	r25, 0x61	; 97
+ 108:	01 97       	sbiw	r24, 0x01	; 1
+ 10a:	f1 f7       	brne	.-4      	; 0x108 <main+0x74>
+ 10c:	00 c0       	rjmp	.+0      	; 0x10e <main+0x7a>
+ 10e:	00 00       	nop
+				}
+			}
+			_delay_ms(100);
+		}
+		if (current_control_input & MEM_READ_)
+ 110:	c1 ff       	sbrs	r28, 1
+ 112:	ce cf       	rjmp	.-100    	; 0xb0 <main+0x1c>
+		{
+			PORTA = MEMORY[current_write_data_address & 0xF];
+ 114:	e1 2f       	mov	r30, r17
+ 116:	ef 70       	andi	r30, 0x0F	; 15
+ 118:	f0 e0       	ldi	r31, 0x00	; 0
+ 11a:	e0 5a       	subi	r30, 0xA0	; 160
+ 11c:	ff 4f       	sbci	r31, 0xFF	; 255
+ 11e:	80 81       	ld	r24, Z
+ 120:	8b bb       	out	0x1b, r24	; 27
+ 122:	c6 cf       	rjmp	.-116    	; 0xb0 <main+0x1c>
+
+00000124 <_exit>:
+ 124:	f8 94       	cli
+
+00000126 <__stop_program>:
+ 126:	ff cf       	rjmp	.-2      	; 0x126 <__stop_program>
